@@ -26,7 +26,7 @@ def preprocess_text(text: str) -> str:
     text = re.sub(r"[^a-zA-Z.,!?]+", r" ", text) 
     return text
 
-def preprocess_yelp_csv_file(filepath: str, append_with: str) -> None:
+def preprocess_yelp_csv_file(filepath: str, append_with: str) -> str:
     """
     Takes in a file path, preproesses each line of text using the preprocess_text
     and saves the file back. Assumes that the file can be loaded into memory
@@ -43,8 +43,8 @@ def preprocess_yelp_csv_file(filepath: str, append_with: str) -> None:
     
     Returns
     -------
-    None
-        It simply saves the file to the path
+    str
+        The filepath for the processed file
 
     Example
     -------
@@ -55,6 +55,7 @@ def preprocess_yelp_csv_file(filepath: str, append_with: str) -> None:
     df.review = df.review.apply(preprocess_text)
     new_filepath = filepath.strip(".csv") + f"_{append_with}.csv"
     df.to_csv(new_filepath)
+    return new_filepath
 
 def count_lines(filepath: str) -> int:
     """
@@ -128,3 +129,4 @@ def split_yelp_data(filepath: str, split_ratios: list, split_filenames: list, sh
             else:
                 fp_2.writelines(line)
     
+    return file_1_path, file_2_path
